@@ -2,6 +2,7 @@ class Background {
     constructor() {
         this.document = document;
         this.setRandomBackground();
+        this.displayIfFriday();
     }
 
     setRandomBackground() {
@@ -13,6 +14,18 @@ class Background {
             this.document.querySelector('h1').style.color = this.getRandomHex();
         }
 
+    }
+
+    displayIfFriday() {
+        const flex = this.document.querySelector('.flex');
+        const text = this.document.createElement('h2');
+        text.textContent = this.isFriday() ? 'Ja' : 'Nej';
+        flex.appendChild(text);
+    }
+
+    isFriday() {
+        const date = new Date();
+        return date.getDay() === 5;
     }
 
     getRandomHex() {

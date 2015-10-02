@@ -10,6 +10,7 @@ var Background = (function () {
 
         this.document = document;
         this.setRandomBackground();
+        this.displayIfFriday();
     }
 
     _createClass(Background, [{
@@ -22,6 +23,20 @@ var Background = (function () {
             if (hex == "FFFFFF") {
                 this.document.querySelector('h1').style.color = this.getRandomHex();
             }
+        }
+    }, {
+        key: 'displayIfFriday',
+        value: function displayIfFriday() {
+            var flex = this.document.querySelector('.flex');
+            var text = this.document.createElement('h2');
+            text.textContent = this.isFriday() ? 'Ja' : 'Nej';
+            flex.appendChild(text);
+        }
+    }, {
+        key: 'isFriday',
+        value: function isFriday() {
+            var date = new Date();
+            return date.getDay() === 5;
         }
     }, {
         key: 'getRandomHex',
