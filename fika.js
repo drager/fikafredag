@@ -24,8 +24,7 @@ class Background {
     }
 
     isFriday() {
-        const date = new Date();
-        return date.getDay() === 5;
+        return new Date().getDay() === 5;
     }
 
     getRandomHex() {

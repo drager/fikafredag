@@ -35,8 +35,7 @@ var Background = (function () {
     }, {
         key: 'isFriday',
         value: function isFriday() {
-            var date = new Date();
-            return date.getDay() === 5;
+            return new Date().getDay() === 5;
         }
     }, {
         key: 'getRandomHex',
