@@ -1,3 +1,42 @@
+class Person {
+    constructor() {
+        this.persons = ['Andreas', 'Erik', 'Jesper', 'Rasmus', 'Sherief'];
+    }
+
+    pickPerson() {
+        return this.persons[Math.floor(Math.random() * this.persons.length)];
+    }
+}
+
+
+class Timer {
+    constructor(duration, display) {
+        this.duration = duration;
+        this.display = display;
+    }
+
+    start() {
+        let timer = this.duration, minutes, seconds;
+        setInterval(() => {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            this.changeDisplayTime(minutes, seconds);
+
+            if (--timer < 0) {
+                timer = this.duration;
+            }
+        }, 1000);
+    }
+
+    changeDisplayTime(minutes, seconds) {
+        this.display.textContent = minutes + ":" + seconds;
+    }
+}
+
 class Background {
     constructor() {
         this.document = document;
@@ -18,8 +57,10 @@ class Background {
 
     displayIfFriday() {
         const flex = this.document.querySelector('.flex');
-        const text = this.document.createElement('h2');
-        text.textContent = this.isFriday() ? 'Ja' : 'Nej';
+        const text = this.document.querySelector('.always');
+        if (this.isFriday()) {
+            text.textContent = 'Yes! Idag är det finfika!';
+        }
         flex.appendChild(text);
     }
 
@@ -36,4 +77,18 @@ class Background {
 
 (() => {
     new Background();
+
+    const flex = document.querySelector('.flex');
+    flex.appendChild(document.createElement('time'));
+
+
+    const timer = new Timer(10 * 5, document.querySelector('time'));
+    //timer.start();
+
+    const person = new Person();
+    const personElement = document.createElement('h3');
+    personElement.textContent = `Och det är ${person.pickPerson()} som bjuder
+    på fika denna fredag!`;
+    flex.appendChild(personElement);
+
 })();
