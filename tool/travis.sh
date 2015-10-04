@@ -5,5 +5,7 @@ set -e
 
 cd server
 
+pub get
+
 # Run the tests.
 pub run test test
