@@ -34,10 +34,9 @@ var Person = (function () {
 })();
 
 var Timer = (function () {
-    function Timer(duration, display) {
+    function Timer(display) {
         _classCallCheck(this, Timer);
 
-        this.duration = duration;
         this.display = display;
     }
 
@@ -46,27 +45,25 @@ var Timer = (function () {
         value: function start() {
             var _this = this;
 
-            var timer = this.duration,
-                minutes = undefined,
-                seconds = undefined;
             setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                _this.changeDisplayTime(minutes, seconds);
-
-                if (--timer < 0) {
-                    timer = _this.duration;
-                }
+                _this.changeDisplayTime(_this.friday());
             }, 1000);
         }
     }, {
         key: 'changeDisplayTime',
-        value: function changeDisplayTime(minutes, seconds) {
-            this.display.textContent = minutes + ":" + seconds;
+        value: function changeDisplayTime(time) {
+            this.display.textContent = time.days + ' dagar, ' + time.hours + ' timmar,\n            ' + time.minutes + ' minuter och ' + time.seconds + ' sekunder';
+        }
+    }, {
+        key: 'friday',
+        value: function friday() {
+            var now = new Date(new Date().getTime() + 60 * 60 * 60 * 1000);
+            return {
+                days: 7 - now.getDay() || 7,
+                hours: 24 - now.getHours(),
+                minutes: 60 - now.getMinutes(),
+                seconds: 60 - now.getSeconds()
+            };
         }
     }]);
 
@@ -79,7 +76,7 @@ var Background = (function () {
 
         this.document = document;
         this.setRandomBackground();
-        this.displayIfFriday();
+        //this.displayIfFriday();
     }
 
     _createClass(Background, [{
@@ -93,16 +90,17 @@ var Background = (function () {
                 this.document.querySelector('h1').style.color = this.getRandomHex();
             }
         }
-    }, {
-        key: 'displayIfFriday',
-        value: function displayIfFriday() {
-            var flex = this.document.querySelector('.flex');
-            var text = this.document.querySelector('.always');
-            if (this.isFriday()) {
-                text.textContent = 'Yes! Idag är det finfika!';
-            }
-            flex.appendChild(text);
-        }
+
+        // TODO: Display when counter ends!
+        //displayIfFriday() {
+        //    const flex = this.document.querySelector('.flex');
+        //    const text = this.document.querySelector('.always');
+        //    if (this.isFriday()) {
+        //        text.textContent = 'Yes! Idag är det finfika!';
+        //    }
+        //    flex.appendChild(text);
+        //}
+
     }, {
         key: 'isFriday',
         value: function isFriday() {
@@ -122,23 +120,23 @@ var Background = (function () {
 
     var flex = document.querySelector('.flex');
     var h1 = document.createElement('h1');
-    var always = document.createElement('h2');
+    //const always = document.createElement('h2');
 
-    h1.textContent = 'Fika på fredag? (Vecka ' + week() + ')';
-    always.className = 'always';
-    always.textContent = 'Självklart är det fika!';
+    h1.textContent = 'Fika på fredag! (Vecka ' + week() + ')';
+    //always.className = 'always';
+    //always.textContent = 'Självklart är det fika!';
     flex.appendChild(h1);
-    flex.appendChild(always);
+    //flex.appendChild(always);
     flex.appendChild(document.createElement('time'));
 
     new Background();
 
-    var timer = new Timer(10 * 5, document.querySelector('time'));
-    //timer.start();
+    var timer = new Timer(document.querySelector('time'));
+    timer.start();
 
     var person = new Person();
     var personElement = document.createElement('h3');
-    personElement.textContent = 'Och det är ' + person.pickPerson() + ' som bjuder\n    denna fredag!';
+    personElement.textContent = 'Det är ' + person.pickPerson() + ' som bjuder\n    denna fredag!';
     flex.appendChild(personElement);
 })();
 
