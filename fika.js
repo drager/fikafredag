@@ -40,7 +40,7 @@ class Timer {
     }
 
     friday() {
-        const now = new Date(new Date().getTime() + 60 * 60 * 60 * 1000);
+        const now = new Date(new Date().getTime() + 58 * 60 * 60 * 1000);
         return {
             days: 7 - now.getDay() || 7,
             hours: 24 - now.getHours(),

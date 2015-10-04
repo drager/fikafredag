@@ -57,7 +57,7 @@ var Timer = (function () {
     }, {
         key: 'friday',
         value: function friday() {
-            var now = new Date(new Date().getTime() + 60 * 60 * 60 * 1000);
+            var now = new Date(new Date().getTime() + 58 * 60 * 60 * 1000);
             return {
                 days: 7 - now.getDay() || 7,
                 hours: 24 - now.getHours(),
