@@ -1,10 +1,24 @@
+const d = new Date();
+
+const week = () => {
+    const target = new Date(d.valueOf());
+    target.setDate(target.getDate() - ((d.getDay() + 6) % 7) + 3);
+    return 1 + Math.ceil((target -
+            new Date(target.getFullYear(), 0, 4)) / 86400000 / 7);
+
+};
+
+const year = () => {
+    return d.getFullYear();
+};
+
 class Person {
     constructor() {
         this.persons = ['Andreas', 'Erik', 'Jesper', 'Rasmus', 'Sherief'];
     }
 
     pickPerson() {
-        return this.persons[Math.floor(Math.random() * this.persons.length)];
+        return this.persons[(week() + year() * week()) % this.persons.length];
     }
 }
 
@@ -76,11 +90,19 @@ class Background {
 }
 
 (() => {
-    new Background();
 
     const flex = document.querySelector('.flex');
+    const h1 = document.createElement('h1');
+    const always = document.createElement('h2');
+
+    h1.textContent = `Fika på fredag? (Vecka ${week()})`;
+    always.className = 'always';
+    always.textContent = 'Självklart är det fika!';
+    flex.appendChild(h1);
+    flex.appendChild(always);
     flex.appendChild(document.createElement('time'));
 
+    new Background();
 
     const timer = new Timer(10 * 5, document.querySelector('time'));
     //timer.start();
@@ -88,7 +110,7 @@ class Background {
     const person = new Person();
     const personElement = document.createElement('h3');
     personElement.textContent = `Och det är ${person.pickPerson()} som bjuder
-    på fika denna fredag!`;
+    denna fredag!`;
     flex.appendChild(personElement);
 
 })();

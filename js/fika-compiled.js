@@ -4,6 +4,18 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
+var d = new Date();
+
+var week = function week() {
+    var target = new Date(d.valueOf());
+    target.setDate(target.getDate() - (d.getDay() + 6) % 7 + 3);
+    return 1 + Math.ceil((target - new Date(target.getFullYear(), 0, 4)) / 86400000 / 7);
+};
+
+var year = function year() {
+    return d.getFullYear();
+};
+
 var Person = (function () {
     function Person() {
         _classCallCheck(this, Person);
@@ -14,7 +26,7 @@ var Person = (function () {
     _createClass(Person, [{
         key: 'pickPerson',
         value: function pickPerson() {
-            return this.persons[Math.floor(Math.random() * this.persons.length)];
+            return this.persons[(week() + year() * week()) % this.persons.length];
         }
     }]);
 
@@ -107,17 +119,26 @@ var Background = (function () {
 })();
 
 (function () {
-    new Background();
 
     var flex = document.querySelector('.flex');
+    var h1 = document.createElement('h1');
+    var always = document.createElement('h2');
+
+    h1.textContent = 'Fika på fredag? (Vecka ' + week() + ')';
+    always.className = 'always';
+    always.textContent = 'Självklart är det fika!';
+    flex.appendChild(h1);
+    flex.appendChild(always);
     flex.appendChild(document.createElement('time'));
+
+    new Background();
 
     var timer = new Timer(10 * 5, document.querySelector('time'));
     //timer.start();
 
     var person = new Person();
     var personElement = document.createElement('h3');
-    personElement.textContent = 'Och det är ' + person.pickPerson() + ' som bjuder\n    på fika denna fredag!';
+    personElement.textContent = 'Och det är ' + person.pickPerson() + ' som bjuder\n    denna fredag!';
     flex.appendChild(personElement);
 })();
 
