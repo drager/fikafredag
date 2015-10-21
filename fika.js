@@ -14,7 +14,7 @@ const year = () => {
 
 class Person {
     constructor() {
-        this.persons = ['Andreas', 'Erik', 'Jesper', 'Rasmus', 'Sherief'];
+        this.persons = ['Andreas', 'Erik', 'Jesper', 'Rasmus', 'David', 'Sherief'];
     }
 
     pickPerson() {
