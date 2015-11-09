@@ -1,8 +1,8 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var d = new Date();
 
@@ -16,22 +16,12 @@ var year = function year() {
     return d.getFullYear();
 };
 
-var Person = (function () {
-    function Person() {
-        _classCallCheck(this, Person);
-
-        this.persons = ['Andreas', 'Erik', 'Jesper', 'Rasmus', 'Sherief'];
+var person = {
+    pickPerson: function pickPerson() {
+        var persons = ['David', 'Andreas', 'Erik', 'Jesper', 'Rasmus', 'Sherief'];
+        return persons[(week() + year() * week()) % persons.length];
     }
-
-    _createClass(Person, [{
-        key: 'pickPerson',
-        value: function pickPerson() {
-            return this.persons[(week() + year() * week()) % this.persons.length];
-        }
-    }]);
-
-    return Person;
-})();
+};
 
 var Timer = (function () {
     function Timer(display) {
@@ -76,7 +66,6 @@ var Background = (function () {
 
         this.document = document;
         this.setRandomBackground();
-        //this.displayIfFriday();
     }
 
     _createClass(Background, [{
@@ -89,22 +78,6 @@ var Background = (function () {
             if (hex == "FFFFFF") {
                 this.document.querySelector('h1').style.color = this.getRandomHex();
             }
-        }
-
-        // TODO: Display when counter ends!
-        //displayIfFriday() {
-        //    const flex = this.document.querySelector('.flex');
-        //    const text = this.document.querySelector('.always');
-        //    if (this.isFriday()) {
-        //        text.textContent = 'Yes! Idag är det finfika!';
-        //    }
-        //    flex.appendChild(text);
-        //}
-
-    }, {
-        key: 'isFriday',
-        value: function isFriday() {
-            return new Date().getDay() === 5;
         }
     }, {
         key: 'getRandomHex',
@@ -120,13 +93,9 @@ var Background = (function () {
 
     var flex = document.querySelector('.flex');
     var h1 = document.createElement('h1');
-    //const always = document.createElement('h2');
 
     h1.textContent = 'Fika på fredag! (Vecka ' + week() + ')';
-    //always.className = 'always';
-    //always.textContent = 'Självklart är det fika!';
     flex.appendChild(h1);
-    //flex.appendChild(always);
     flex.appendChild(document.createElement('time'));
 
     new Background();
@@ -134,10 +103,7 @@ var Background = (function () {
     var timer = new Timer(document.querySelector('time'));
     timer.start();
 
-    var person = new Person();
     var personElement = document.createElement('h3');
     personElement.textContent = 'Det är ' + person.pickPerson() + ' som bjuder\n    denna fredag!';
     flex.appendChild(personElement);
 })();
-
-//# sourceMappingURL=fika-compiled.js.map
