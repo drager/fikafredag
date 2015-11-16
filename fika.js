@@ -15,7 +15,7 @@ const year = () => {
 const person = {
     pickPerson() {
         const persons = ['David', 'Andreas', 'Erik', 'Jesper', 'Rasmus', 'Sherief'];
-        return persons[(week() + year() * week()) % persons.length];
+        return persons[week() % persons.length];
     }
 };
 

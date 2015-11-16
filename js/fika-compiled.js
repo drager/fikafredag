@@ -19,7 +19,7 @@ var year = function year() {
 var person = {
     pickPerson: function pickPerson() {
         var persons = ['David', 'Andreas', 'Erik', 'Jesper', 'Rasmus', 'Sherief'];
-        return persons[(week() + year() * week()) % persons.length];
+        return persons[week() % persons.length];
     }
 };
 
